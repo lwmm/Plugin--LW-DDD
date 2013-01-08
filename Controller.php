@@ -1,17 +1,33 @@
 <?php
 
 namespace LWddd;
+use \lw_response as lwResponse;
+use \lw_request as lwRequest;
+use \LWddd\ValueObject as valueObject;
+use \LWddd\DomainEvent as domainEvent;
+use \LWddd\CommandBus as commandBus;
 
 class Controller 
 {
-    
-    public function __construct()
+    public function __construct(lwResponse $response)
     {
-        $this->response = \lw_response::getInstance();
-        $this->commandBus = new \LWddd\CommandBus();
+        $this->response = $response;
+        $this->commandBus = new commandBus();
+        $this->commandString = "cmd";
+        $this->idString = "id";
     }
     
-    public function execute(\lw_request $HTTPRequest)
+    public function setCommandString($cmd)
+    {
+        $this->commandString = $cmd;
+    }
+    
+    public function setIdString($id)
+    {
+        $this->idString = $id;
+    }
+    
+    public function execute(lwRequest $HTTPRequest)
     {
         $this->generateDomainEventFromHTTPRequest($HTTPRequest);
 
@@ -23,7 +39,7 @@ class Controller
 
     public function generateDomainEventFromHTTPRequest($HTTPRequest)
     {
-        $domainCommand = $HTTPRequest->getAlnum("cmd");
+        $domainCommand = $HTTPRequest->getAlnum($this->commandString);
         if (!$domainCommand) {
             if ($this->defaultAction) {
                 $domainCommand = $this->defaultAction;
@@ -36,10 +52,10 @@ class Controller
             $domainCommand = $domainCommand."Action";
         }   
     
-        $id = $HTTPRequest->getInt("id");
+        $id = $HTTPRequest->getInt($this->idString);
     
-        $postValueObject = new \LWddd\ValueObject($HTTPRequest->getPostArray());
-        $getValueObject = new \LWddd\ValueObject($HTTPRequest->getGetArray());
-        $this->domainEvent = new \LWddd\DomainEvent($domainCommand, $postValueObject, $getValueObject, $id);
+        $postValueObject = new valueObject($HTTPRequest->getPostArray());
+        $getValueObject = new valueObject($HTTPRequest->getGetArray());
+        $this->domainEvent = new domainEvent($domainCommand, $postValueObject, $getValueObject, $id);
     }    
 }
