@@ -13,13 +13,7 @@ class Controller
     {
         $this->response = $response;
         $this->commandBus = new commandBus();
-        $this->commandString = "cmd";
         $this->idString = "id";
-    }
-    
-    public function setCommandString($cmd)
-    {
-        $this->commandString = $cmd;
     }
     
     public function setIdString($id)
@@ -27,9 +21,14 @@ class Controller
         $this->idString = $id;
     }
     
-    public function execute(lwRequest $HTTPRequest)
+    public function setSession($session)
     {
-        $this->generateDomainEventFromHTTPRequest($HTTPRequest);
+        $this->session = $session;
+    }
+    
+    public function execute($cmd, lwRequest $HTTPRequest)
+    {
+        $this->generateDomainEventFromHTTPRequest($cmd, $HTTPRequest);
 
         if (method_exists($this, $this->domainEvent->getEventName()) && is_callable(array($this, $this->domainEvent->getEventName()))) {
             call_user_func(array($this, $this->domainEvent->getEventName()));
@@ -37,9 +36,9 @@ class Controller
         return $this->response;
     }
 
-    public function generateDomainEventFromHTTPRequest($HTTPRequest)
+    public function generateDomainEventFromHTTPRequest($cmd, $HTTPRequest)
     {
-        $domainCommand = $HTTPRequest->getAlnum($this->commandString);
+        $domainCommand = $cmd;
         if (!$domainCommand) {
             if ($this->defaultAction) {
                 $domainCommand = $this->defaultAction;
@@ -57,5 +56,6 @@ class Controller
         $postValueObject = new valueObject($HTTPRequest->getPostArray());
         $getValueObject = new valueObject($HTTPRequest->getGetArray());
         $this->domainEvent = new domainEvent($domainCommand, $postValueObject, $getValueObject, $id);
+        $this->domainEvent->setSession($this->session);
     }    
 }
