@@ -35,6 +35,27 @@ class DomainEvent
         return $this->id;
     }
     
+    function setSession($session)
+    {
+        $this->session = $session;
+    }
+    
+    function getSession()
+    {
+        if ($this->hasSession()) {
+            return $this->session;
+        }
+        return false;
+    }
+    
+    public function hasSession()
+    {
+        if ($this->session) {
+            return true;
+        }
+        return false;
+    }
+    
     function setEntity(\LWddd\Entity $entity)
     {
         $this->entity = $entity;
