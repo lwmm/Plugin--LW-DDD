@@ -22,7 +22,7 @@ class ValueObject
         $validationService->setValues($values);
         $valid = $validationService->validate();
         if (!$valid) {
-            throw new Exception('event data is not valid: validation errors');
+            throw new \Exception('event data is not valid: validation errors');
         }
     }
     
@@ -31,7 +31,7 @@ class ValueObject
         foreach($values as $key => $value)
         {
             if (!in_array($key, $allowedKeys)) {
-                throw new Exception('event data is not valid: invalid key(s)');
+                throw new \Exception('event data is not valid: invalid key(s)');
             }
         }
     }    
