@@ -1,6 +1,7 @@
 <?php
 
 namespace LWddd;
+use \Exception as Exception;
 
 class Entity
 {
