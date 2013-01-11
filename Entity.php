@@ -80,15 +80,8 @@ class Entity
         $view->entity = $this->valueObject->getValues();
     }
     
-    public function saveEntity($commandHandler)
+    public function finishSaveResult($result)
     {
-        if ($this->id > 0 ) {
-            $result = $commandHandler->saveEvent($this->id, $this->valueObject);
-        }
-        else {
-            $result = $commandHandler->addEvent($this->valueObject);
-            $this->id = $result;
-        }
         if ($result) {
             $this->setLoaded();
             $this->unsetDirty();
