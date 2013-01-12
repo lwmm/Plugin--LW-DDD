@@ -53,9 +53,9 @@ class Controller
     
         $id = $HTTPRequest->getInt($this->idString);
     
-        $postValueObject = new valueObject($HTTPRequest->getPostArray());
-        $getValueObject = new valueObject($HTTPRequest->getGetArray());
-        $this->domainEvent = new domainEvent($domainCommand, $postValueObject, $getValueObject, $id);
+        $dataValueObject = new valueObject($HTTPRequest->getPostArray());
+        $parameterValueObject = new valueObject($HTTPRequest->getGetArray());
+        $this->domainEvent = new domainEvent($domainCommand, $dataValueObject, $parameterValueObject, $id);
         $this->domainEvent->setSession($this->session);
     }    
 }
