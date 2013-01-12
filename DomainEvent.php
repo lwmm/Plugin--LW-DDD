@@ -7,11 +7,11 @@ class DomainEvent
     
     private $values;
     
-    function __construct($eventName, $postValueObject, $getValueObject, $id=false)
+    function __construct($eventName, ValueObject $dataValueObject, ValueObject $parameterValueObject, $id=false)
     {
         $this->eventName = $eventName;
-        $this->postValueObject = $postValueObject;
-        $this->getValueObject = $getValueObject;
+        $this->dataValueObject = $dataValueObject;
+        $this->parameterValueObject = $parameterValueObject;
         $this->id = $id;
     }
 
@@ -20,14 +20,24 @@ class DomainEvent
         return $this->eventName;
     }
     
-    function getPostValueObject()
+    function getDataValueObject()
     {
-        return $this->postValueObject;
+        return $this->dataValueObject;
     }
     
-    function getGetValueObject()
+    function getDataByKey($key)
     {
-        return $this->getValueObject;
+        return $this->dataValueObject->getValueByKey($key);
+    }
+    
+    function getParameterValueObject()
+    {
+        return $this->parameterValueObject;
+    }
+    
+    function getParameterByKey($key)
+    {
+        return $this->parameterValueObject->getValueByKey($key);
     }
     
     function getId()
