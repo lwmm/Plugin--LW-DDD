@@ -13,6 +13,11 @@ class EntityAggregate implements \Iterator
         $this->position = 0;
     }
 
+    function count()
+    {
+        return count($this->entities);
+    }
+    
     function rewind() {
         $this->position = 0;
     }
