@@ -8,13 +8,7 @@ class Entity
     public function __construct($id=false)
     {
         $this->unsetLoaded();
-        $id = intval($id);
-        if (!$id) {
-            $this->id = false;
-        }
-        else {
-            $this->id = $id;
-        }
+        $this->setId($id);
     }
     
     public function setDataValueObject(\LWddd\ValueObject $valueObject)
@@ -73,6 +67,17 @@ class Entity
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function setId($id)
+    {
+        $id = intval($id);
+        if (!$id) {
+            $this->id = false;
+        }
+        else {
+            $this->id = $id;
+        }
     }
     
     public function renderView($view)
