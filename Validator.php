@@ -71,7 +71,7 @@ class Validator
     static function isAlnum($value) 
     {
         $test = preg_replace('/[^a-zA-Z0-9\s]/', '', (string) $value);
-        if ($this->isRequired($value) && ($value != $test)) {
+        if (Validator::isRequired($value) && ($value != $test)) {
             return false;
         }
         return true;
@@ -79,7 +79,7 @@ class Validator
     
     static function isBetween($value, $options) 
     {
-        if ($this->isRequired($value) && ($value < strval($options["value1"]) || $value > strval($options["value2"]))) {
+        if (Validator::isRequired($value) && ($value < strval($options["value1"]) || $value > strval($options["value2"]))) {
             return false;
         }
         return true;
@@ -88,7 +88,7 @@ class Validator
     static function isDigits($value) 
     {
     	$test = preg_replace('/[^0-9]/', '', (string) $value);
-        if ($this->isRequired($value) && ($value != $test)) {
+        if (Validator::isRequired($value) && ($value != $test)) {
             return false;
         }
         return true;
@@ -96,7 +96,7 @@ class Validator
     
     static function isGreaterThan($value, $options) 
     {
-        if ($this->isRequired($value) && ($value < strval($options["value"]))) {
+        if (Validator::isRequired($value) && ($value < strval($options["value"]))) {
             return false;
         }
         return true;
@@ -104,7 +104,7 @@ class Validator
 
     static function isLessThan($value, $options) 
     {
-        if ($this->isRequired($value) && ($value > strval($options["value"]))) {
+        if (Validator::isRequired($value) && ($value > strval($options["value"]))) {
             return false;
         }
         return true;
@@ -112,7 +112,7 @@ class Validator
     
     static function isInt($value) 
     {
-        if ($this->isRequired($value) && (!is_int($value))) {
+        if (Validator::isRequired($value) && (!is_int($value))) {
             return false;
         }
         return true;
@@ -120,7 +120,7 @@ class Validator
     
     static function isFiletype($value, $options) 
     {
-    	if ($this->isRequired($value)) {
+    	if (Validator::isRequired($value)) {
             $ext = strtolower(substr($value,strrpos($value,'.')+1,strlen($value)));
             if (!strstr($options["extensions"], ":".$ext.":")) {
                 return false;
@@ -131,6 +131,6 @@ class Validator
 
     static function isImage($value) 
     {
-        return $this->isFiletype($value, array('value',':jpg:jpeg:png:gif:'));
+        return Validator::isFiletype($value, array('extensions' => ':jpg:jpeg:png:gif:'));
     }
 }
