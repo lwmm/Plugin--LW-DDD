@@ -1,0 +1,35 @@
+<?php if($this->page != 1 ):?>
+<a id="lw_commandLogs_prev" href="#" onclick="self.location.href='<?php echo $this->prev ?>';">prev</a>
+<?php endif;?>
+<?php if($this->page != $this->pageCount):?>
+<a id="lw_commandLogs_next" href="#" onclick="self.location.href='<?php echo $this->next ?>';">next</a>
+<?php endif;?>
+<table>
+    <thead>
+        <tr>
+            <th id="lw_commandLogs_id_th">ID</th>
+            <th id="lw_commandLogs_project_th">Project</th>
+            <th id="lw_commandLogs_domain_th">Domain</th>
+            <th id="lw_commandLogs_statement_th">Statement</th>
+            <th id="lw_commandLogs_date_th">Date</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <?php foreach($this->logs as $log): ?>
+        <tr>
+            <td class="lw_commandLogs_id"><?php echo $log["id"]; ?></td>
+            <td class="lw_commandLogs_project"><?php echo $log["project"]; ?></td>
+            <td class="lw_commandLogs_domain"><?php echo $log["domain"]; ?></td>
+            <td class="lw_commandLogs_statement"><?php echo base64_decode($log["statement"]); ?></td>
+            <td class="lw_commandLogs_date"><?php echo $log["date"]; ?></td>
+        </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>
+<?php if($this->page != 1 ):?>
+<a id="lw_commandLogs_prev" href="#" onclick="self.location.href='<?php echo $this->prev ?>';">prev</a>
+<?php endif;?>
+<?php if($this->page != $this->pageCount):?>
+<a id="lw_commandLogs_next" href="#" onclick="self.location.href='<?php echo $this->next ?>';">next</a>
+<?php endif;?>
